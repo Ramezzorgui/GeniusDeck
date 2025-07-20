@@ -1,5 +1,6 @@
 package com.presentation.generator.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import java.util.List;
 @Entity
 
 @NoArgsConstructor
-@Table(name = "templete")
+@Table(name = "template")
 @AllArgsConstructor
 public class Template {
 
@@ -33,6 +34,7 @@ public class Template {
     private User createdBy;
 
     @OneToMany(mappedBy = "template")
+    @JsonIgnore
     private List<Presentation> presentations;
 
     public Long getId() {

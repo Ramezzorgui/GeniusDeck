@@ -1,5 +1,6 @@
 package com.presentation.generator.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -33,6 +34,7 @@ public class User {
     private Role role;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Presentation> presentations;
 
     public Long getId() {
@@ -100,6 +102,7 @@ public class User {
     }
 
     @OneToMany(mappedBy = "createdBy")
+    @JsonIgnore
     private List<Template> templates;
 }
 

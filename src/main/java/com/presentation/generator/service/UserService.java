@@ -2,6 +2,7 @@ package com.presentation.generator.service;
 
 import com.presentation.generator.entity.User;
 import com.presentation.generator.repository.UserRepository;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,4 +43,11 @@ public class UserService {
         }
         userRepository.deleteById(id);
     }
+
+    // UserService.java
+    public User getByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("Utilisateur non trouvé avec l'email: " + email));
+    }
+
 }

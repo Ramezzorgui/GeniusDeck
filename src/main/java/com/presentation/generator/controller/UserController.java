@@ -8,8 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
-@CrossOrigin // permet à Angular de faire des appels
-public class UserController {
+ public class UserController {
 
     private final UserService userService;
 

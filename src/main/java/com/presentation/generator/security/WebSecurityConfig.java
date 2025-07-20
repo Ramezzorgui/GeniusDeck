@@ -17,8 +17,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+// NOUVEAUX IMPORTS POUR CORS
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import java.util.List; // Pour List.of( )
+
 @Configuration
-@EnableMethodSecurity // Permet d'utiliser @PreAuthorize, @PostAuthorize, etc.
+@EnableMethodSecurity
 public class WebSecurityConfig {
 
     @Autowired
@@ -27,18 +33,14 @@ public class WebSecurityConfig {
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
 
-    @Bean
-    public AuthTokenFilter authenticationJwtTokenFilter( ) {
-        return new AuthTokenFilter();
-    }
+    @Autowired
+    private AuthTokenFilter authTokenFilter;
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-
         authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
-
         return authProvider;
     }
 
@@ -54,19 +56,36 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http ) throws Exception {
-        http.csrf(csrf -> csrf.disable( )) // Désactive CSRF pour les API REST sans état
+        http.csrf(csrf -> csrf.disable( ))
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Pas de session côté serveur
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/api/auth/**").permitAll() // Permet l'accès à /api/auth/** (inscription/connexion)
-                                .requestMatchers("/api/test/**").permitAll() // Exemple de endpoint public
-                                .anyRequest().authenticated() // Toutes les autres requêtes nécessitent une authentification
-                );
+                        auth.requestMatchers("/api/auth/**").permitAll()
+                                .requestMatchers("/api/test/**").permitAll()
+                                .requestMatchers("/api/presentations").permitAll() // Temporaire si vous voulez tester sans auth
+                                .requestMatchers("/uploads/**").permitAll()
+                                .requestMatchers("/generate-structure/**").permitAll()
+                                .anyRequest().authenticated()
+                )
+                // AJOUT DE LA CONFIGURATION CORS ICI
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())); // <--- LIGNE AJOUTÉE
 
         http.authenticationProvider(authenticationProvider( ));
-
-        http.addFilterBefore(authenticationJwtTokenFilter( ), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class );
 
         return http.build( );
+    }
+
+    // AJOUT DU BEAN POUR LA SOURCE DE CONFIGURATION CORS
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("http://localhost:4200" )); // L'origine de votre frontend Angular
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Inclure OPTIONS
+        configuration.setAllowedHeaders(List.of("*")); // Autoriser tous les en-têtes
+        configuration.setAllowCredentials(true); // Autoriser les credentials (JWT)
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration); // Appliquer à toutes les routes
+        return source;
     }
 }

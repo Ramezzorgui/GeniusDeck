@@ -1,5 +1,6 @@
 package com.presentation.generator.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ public class Slide {
 
     @ManyToOne
     @JoinColumn(name = "presentation_id")
+    @JsonIgnore
     private Presentation presentation;
 
     private Integer position;

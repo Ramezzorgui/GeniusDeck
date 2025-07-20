@@ -43,6 +43,15 @@ public class Presentation {
 
     @OneToMany(mappedBy = "presentation")
     private List<GenerationHistory> history;
+    private String imagePath;
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
 
     public Long getId() {
         return id;

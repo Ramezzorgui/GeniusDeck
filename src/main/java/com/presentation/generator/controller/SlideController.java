@@ -9,7 +9,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/slides")
-@CrossOrigin
 public class SlideController {
 
     private final SlideService slideService;
