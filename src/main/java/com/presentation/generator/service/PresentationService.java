@@ -3,12 +3,10 @@ package com.presentation.generator.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.presentation.generator.dto.SlideData;
-import com.presentation.generator.entity.BriefRequest;
-import com.presentation.generator.entity.Presentation;
-import com.presentation.generator.entity.Slide;
-import com.presentation.generator.entity.User;
+import com.presentation.generator.entity.*;
 import com.presentation.generator.repository.PresentationRepository;
 import com.presentation.generator.repository.SlideRepository;
+import com.presentation.generator.repository.TemplateRepository;
 import com.presentation.generator.repository.UserRepository;
 import com.presentation.generator.security.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +41,11 @@ public class PresentationService {
     private SlideRepository slideRepository;
     @Autowired
     private SlideService slideService;
+    @Autowired
+    private TemplateRepository templateRepository;
+    @Autowired
+    private GenerationHistoryService generationHistoryService;
+
 
 
     public List<Presentation> getAllPresentations() {
@@ -181,7 +184,7 @@ public class PresentationService {
         return presentation;
     }
 
-    public Presentation generateFromBrief(BriefRequest brief) {
+    /*public Presentation generateFromBrief(BriefRequest brief) {
         // 1. Simuler l'appel IA
         String fullText = brief.getGoal() + "\n" + brief.getKeyPoints();
         List<SlideData> slides = aiService.generateSlidesContent(brief.getSubject(), fullText);
@@ -207,6 +210,58 @@ public class PresentationService {
         presentationRepository.save(p);
 
         return p;
+    }*/
+
+    public Presentation generateFromBrief(BriefRequest brief) {
+        // 1. Génération du contenu via IA
+        String fullText = brief.getGoal() + "\n" + brief.getKeyPoints();
+        List<SlideData> slides = aiService.generateSlidesContent(brief.getSubject(), fullText);
+
+        // 2. Conversion en JSON
+        ObjectMapper mapper = new ObjectMapper();
+        String contentJson;
+        try {
+            contentJson = mapper.writeValueAsString(slides);
+        } catch (Exception e) {
+            throw new RuntimeException("Erreur lors de la conversion des slides en JSON", e);
+        }
+
+        // 3. Création de la présentation
+        Presentation p = new Presentation();
+        p.setTitle(brief.getSubject());
+        p.setDescription(brief.getGoal());
+        p.setCreatedAt(LocalDateTime.now());
+        p.setUpdatedAt(LocalDateTime.now());
+        p.setContent(contentJson);
+
+        // Appliquer template si présente
+        if (brief.getTemplateId() != null) {
+            Template template = templateRepository.findById(brief.getTemplateId())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Template non trouvée"));
+            p.setTemplate(template);
+        }
+
+        // Associer utilisateur connecté
+        Long userId = getCurrentUserId();
+        User currentUser = userRepository.findById(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur non trouvé"));
+        p.setUser(currentUser);
+
+        // 4. Sauvegarder la présentation
+        Presentation savedPresentation = presentationRepository.save(p);
+
+        // 5. Enregistrer l’historique de génération
+        GenerationHistory history = new GenerationHistory();
+        history.setPresentation(savedPresentation);
+        history.setPrompt(brief.getSubject() + " | " + brief.getGoal());
+        history.setResponse(contentJson); // ou le texte brut de la réponse AI si tu le préfères
+        history.setTokensUsed(0); // si tu as ce chiffre, sinon 0 ou null
+        history.setCreatedAt(LocalDateTime.now());
+
+        generationHistoryService.create(history);
+
+        // 6. Retourner la présentation sauvegardée
+        return savedPresentation;
     }
 
 

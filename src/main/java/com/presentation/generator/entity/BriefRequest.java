@@ -6,6 +6,7 @@ public class BriefRequest {
     private String audience;
     private String goal;
     private String keyPoints;
+    private Long templateId;
 
     public String getSubject() {
         return subject;
@@ -45,5 +46,13 @@ public class BriefRequest {
 
     public void setKeyPoints(String keyPoints) {
         this.keyPoints = keyPoints;
+    }
+
+    public Long getTemplateId() {
+        return templateId;
+    }
+
+    public void setTemplateId(Long templateId) {
+        this.templateId = templateId;
     }
 }

@@ -62,9 +62,11 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/api/auth/**").permitAll()
                                 .requestMatchers("/api/test/**").permitAll()
-                                .requestMatchers("/api/presentations").permitAll() // Temporaire si vous voulez tester sans auth
+                                .requestMatchers("/api/presentations/**").permitAll()
                                 .requestMatchers("/uploads/**").permitAll()
-                                .requestMatchers("/generate-structure/**").permitAll()
+                                .requestMatchers("/api/templates/**").permitAll()
+                                .requestMatchers("/api/generationHistory/**").permitAll()
+                                .requestMatchers("/users/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 // AJOUT DE LA CONFIGURATION CORS ICI

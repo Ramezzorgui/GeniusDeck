@@ -6,6 +6,7 @@ public class BriefRequest {
     private String audience;
     private String objective;
     private String keyPoints;
+    private Long templateId;
 
     // Getters et Setters
     public String getTitle() {
@@ -41,6 +42,12 @@ public class BriefRequest {
     }
     public void setKeyPoints(String keyPoints) {
         this.keyPoints = keyPoints;
+    }
+    public Long getTemplateId() {
+        return templateId;
+    }
+    public void setTemplateId(Long templateId) {
+        this.templateId = templateId;
     }
 }
 

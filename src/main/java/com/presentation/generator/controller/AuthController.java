@@ -1,16 +1,20 @@
 package com.presentation.generator.controller;
 
+import com.presentation.generator.entity.PasswordResetToken;
 import com.presentation.generator.entity.Role; // Assurez-vous que cette importation est correcte
 import com.presentation.generator.entity.User;
 import com.presentation.generator.payload.request.LoginRequest;
 import com.presentation.generator.payload.request.SignupRequest;
 import com.presentation.generator.payload.response.JwtResponse;
 import com.presentation.generator.payload.response.MessageResponse;
+import com.presentation.generator.repository.PasswordResetTokenRepository;
 import com.presentation.generator.repository.UserRepository;
 import com.presentation.generator.security.Jwt.JwtUtils;
 import com.presentation.generator.security.services.UserDetailsImpl;
+import com.presentation.generator.service.EmailService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,8 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -38,6 +41,13 @@ public class AuthController {
 
     @Autowired
     JwtUtils jwtUtils;
+    @Autowired
+    private PasswordResetTokenRepository passwordResetTokenRepository;
+
+    @Autowired
+    private EmailService emailService;
+
+
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -56,7 +66,8 @@ public class AuthController {
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getEmail(),
-                userDetails.getName(), // Passage du nom
+                userDetails.getName(),
+                userDetails.getImageUrl(),// Passage du nom
                 roles));
     }
 
@@ -83,4 +94,44 @@ public class AuthController {
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> body) {
+        String email = body.get("email");
+        Optional<User> userOpt = userRepository.findByEmail(email);
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email non trouvé.");
+        }
+        User user = userOpt.get();
+        passwordResetTokenRepository.findByUser(user)
+                .ifPresent(passwordResetTokenRepository::delete);
+        String token = UUID.randomUUID().toString();
+        PasswordResetToken resetToken = new PasswordResetToken(token, user);
+        passwordResetTokenRepository.save(resetToken);
+        String resetLink = "http://localhost:4200/reset-password?token=" + token;
+        emailService.sendResetPasswordEmail(user.getEmail(), resetLink);
+
+        return ResponseEntity.ok("Lien de réinitialisation envoyé.");
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestBody Map<String, String> body) {
+        String token = body.get("token");
+        String newPassword = body.get("newPassword");
+
+        Optional<PasswordResetToken> tokenOpt = passwordResetTokenRepository.findByToken(token);
+        if (tokenOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Token invalide.");
+        }
+        PasswordResetToken resetToken = tokenOpt.get();
+        User user = resetToken.getUser();
+
+        user.setPassword(encoder.encode(newPassword));
+        userRepository.save(user);
+        passwordResetTokenRepository.delete(resetToken);
+        return ResponseEntity.ok(Collections.singletonMap("message", "Mot de passe réinitialisé."));
+    }
+
+
+
 }

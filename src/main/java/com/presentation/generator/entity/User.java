@@ -37,6 +37,17 @@ public class User {
     @JsonIgnore
     private List<Presentation> presentations;
 
+    private LocalDateTime lastLogin;
+    private String imageUrl;
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     public Long getId() {
         return id;
     }
@@ -104,5 +115,6 @@ public class User {
     @OneToMany(mappedBy = "createdBy")
     @JsonIgnore
     private List<Template> templates;
+
 }
 

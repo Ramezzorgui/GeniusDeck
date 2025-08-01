@@ -1,15 +1,21 @@
 package com.presentation.generator.controller;
 
+import com.presentation.generator.entity.Role;
 import com.presentation.generator.entity.User;
+import com.presentation.generator.repository.UserRepository;
 import com.presentation.generator.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/users")
  public class UserController {
 
+    @Autowired
+    private UserRepository userRepository;
     private final UserService userService;
 
     public UserController(UserService userService) {
@@ -44,4 +50,41 @@ import java.util.List;
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
     }
+
+    @GetMapping("/count")
+    public Map<String, Long> getUserCount() {
+        long count = userRepository.count();
+        return Collections.singletonMap("count", count);
+    }
+
+    @GetMapping("/roles-count")
+    public Map<String, Long> getUserRolesCount() {
+        Map<String, Long> counts = new HashMap<>();
+        for (Role role : Role.values()) {
+            counts.put(role.name(), userRepository.countByRole(role));
+        }
+        return counts;
+    }
+
+    @GetMapping("/active-monthly")
+    public ResponseEntity<Map<String, Object>> getMonthlyActiveUsers() {
+        Map<String, Object> response = userService.getMonthlyActiveUsers();
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/{id}/image")
+    public ResponseEntity<?> updateImageUrl(@PathVariable Long id, @RequestBody Map<String, String> request) {
+        String imageUrl = request.get("imageUrl");
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setImageUrl(imageUrl);
+            userRepository.save(user);
+            return ResponseEntity.ok(Map.of("message", "Image URL updated"));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
 }
