@@ -67,6 +67,7 @@ public class WebSecurityConfig {
                                 .requestMatchers("/api/templates/**").permitAll()
                                 .requestMatchers("/api/generationHistory/**").permitAll()
                                 .requestMatchers("/users/**").permitAll()
+                                .requestMatchers("/api/comments/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 // AJOUT DE LA CONFIGURATION CORS ICI

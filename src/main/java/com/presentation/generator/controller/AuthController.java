@@ -1,5 +1,9 @@
 package com.presentation.generator.controller;
 
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.jackson2.JacksonFactory;
 import com.presentation.generator.entity.PasswordResetToken;
 import com.presentation.generator.entity.Role; // Assurez-vous que cette importation est correcte
 import com.presentation.generator.entity.User;
@@ -132,6 +136,59 @@ public class AuthController {
         return ResponseEntity.ok(Collections.singletonMap("message", "Mot de passe réinitialisé."));
     }
 
+    @PostMapping("/google")
+    public ResponseEntity<?> authenticateWithGoogle(@RequestBody Map<String, String> body) {
+        String idToken = body.get("idToken");
 
+        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new JacksonFactory())
+                .setAudience(Collections.singletonList("238698569922-eogm0jdgj5tucm1v96kv9mka4ua6hnsa.apps.googleusercontent.com")) // à remplacer
+                .build();
+
+        GoogleIdToken googleIdToken;
+        try {
+            googleIdToken = verifier.verify(idToken);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("ID Token invalide.");
+        }
+
+        if (googleIdToken != null) {
+            GoogleIdToken.Payload payload = googleIdToken.getPayload();
+            String email = payload.getEmail();
+            String name = (String) payload.get("name");
+            String picture = (String) payload.get("picture");
+
+            // Recherche ou création de l'utilisateur
+            Optional<User> userOpt = userRepository.findByEmail(email);
+            User user;
+            if (userOpt.isPresent()) {
+                user = userOpt.get();
+            } else {
+                user = new User();
+                user.setEmail(email);
+                user.setName(name);
+                user.setImageUrl(picture);
+                user.setPassword(encoder.encode(UUID.randomUUID().toString())); // mot de passe fictif
+                user.setRole(Role.USER); // ou autre rôle par défaut
+                user.setCreatedAt(LocalDateTime.now());
+                userRepository.save(user);
+            }
+
+            // Génération JWT de ton système
+            Authentication auth = new UsernamePasswordAuthenticationToken(user.getEmail(), null, List.of());
+            SecurityContextHolder.getContext().setAuthentication(auth);
+            String jwt = jwtUtils.generateJwtToken(auth);
+
+            return ResponseEntity.ok(new JwtResponse(
+                    jwt,
+                    user.getId(),
+                    user.getEmail(),
+                    user.getName(),
+                    user.getImageUrl(),
+                    List.of(user.getRole().name())
+            ));
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("ID Token non vérifié.");
+        }
+    }
 
 }
