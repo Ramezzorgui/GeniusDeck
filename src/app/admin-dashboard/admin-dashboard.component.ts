@@ -10,7 +10,7 @@ import { CommentService } from 'src/app/_services/comment.service'
   styleUrls: ['./admin-dashboard.component.css']
 })
 export class AdminDashboardComponent implements OnInit {
-  totalUsers = 0;                // valeur initiale à 0
+  totalUsers = 0;               
   activeUsers = 750;
   presentationsGenerated = 0;
   allComments: CommentService[] = [];
@@ -99,11 +99,11 @@ export class AdminDashboardComponent implements OnInit {
   });
 }
 public activeUsersChartData: ChartConfiguration<'line'>['data'] = {
-  labels: [], // labels dynamiques des jours du mois, ex : ['1', '2', '3', ..., '31']
+  labels: [], 
   datasets: [
     {
       label: 'Utilisateurs actifs',
-      data: [],  // données dynamiques des utilisateurs actifs par jour
+      data: [],  
       borderColor: '#28a745',
       backgroundColor: 'rgba(40,167,69,0.2)',
       fill: true
@@ -126,7 +126,6 @@ public activeUsersChartOptions: ChartConfiguration<'line'>['options'] = {
 loadActiveUsersMonthly() {
   this.userService.getActiveUsersMonthly().subscribe({
     next: (res) => {
-      // Ex: res = { labels: ['1', '2', '3', ...], data: [5, 10, 7, ...] }
       this.activeUsersChartData = {
         labels: res.labels,
         datasets: [

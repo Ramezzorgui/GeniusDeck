@@ -5,6 +5,7 @@ import html2canvas from 'html2canvas';
 import { TemplateService, Template } from 'src/app/_services/template.service';
 import { ActivatedRoute } from '@angular/router';
 
+
 @Component({
   selector: 'app-editor-presentation',
   templateUrl: './editor-presentation.component.html',
@@ -117,34 +118,37 @@ export class EditorPresentationComponent implements OnInit {
   }
 
   exportAsPDF() {
-    const data = document.getElementById('presentationToExport');
-    if (!data) return;
+  const slides = document.querySelectorAll('#presentationToExport > div.slide-export-page');
+  if (!slides.length) return;
 
-    this.isExporting = true;
-    html2canvas(data).then((canvas) => {
-      const imgWidth = 297;
-      const pageHeight = 210;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      let heightLeft = imgHeight;
+  this.isExporting = true;
+  const pdf = new jsPDF('l', 'mm', 'a4');
+  const imgWidth = 297;
+  const pageHeight = 210;
 
-      const contentDataURL = canvas.toDataURL('image/png');
-      const pdf = new jsPDF('l', 'mm', 'a4');
-      let position = 0;
+  let promises: Promise<void>[] = [];
 
-      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
+  slides.forEach((slide, index) => {
+    promises.push(
+      html2canvas(slide as HTMLElement).then((canvas) => {
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        const imgData = canvas.toDataURL('image/png');
 
-      while (heightLeft >= 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-      }
+        if (index > 0) {
+          pdf.addPage();
+        }
 
-      pdf.save('presentation.pdf');
-      this.isExporting = false;
-    });
-  }
+        pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+      })
+    );
+  });
+
+  Promise.all(promises).then(() => {
+    pdf.save('presentation.pdf');
+    this.isExporting = false;
+  });
+}
+
 
   /** Sauvegarde la présentation avec la template choisie */
   savePresentation() {
@@ -271,20 +275,17 @@ export class EditorPresentationComponent implements OnInit {
 
   const currentUser = JSON.parse(userData).email;
   let history = JSON.parse(savedPresentations);
-
-  // Filtrer en excluant la présentation à supprimer
   history = history.filter((p: any) => !(p.id === id && p.user === currentUser));
-
-  // Sauvegarder le nouvel historique
   localStorage.setItem('savedPresentations', JSON.stringify(history));
-
-  // Mettre à jour l'affichage
   this.history = history.filter((p: any) => p.user === currentUser);
-
   alert('Présentation supprimée avec succès !');
 }
 goBack(): void {
   window.history.back();
+}
+
+updatePoint(value: string, index: number) {
+  this.slides[this.currentSlide].content[index] = value;
 }
 
 

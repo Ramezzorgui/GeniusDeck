@@ -43,63 +43,50 @@
     </aside>
 
     <!-- Éditeur -->
-    <main class="slide-editor" [ngStyle]="templateStyles">
-      <!-- Ligne supprimée :
-      <h2>Slide {{ currentSlide + 1 }}/{{ slides.length }}</h2>
-      -->
+<main class="slide-editor" [ngStyle]="templateStyles">
+  <!-- Titre de la slide -->
+  <div class="title-preview"
+       [ngStyle]="{ 
+         'font-family': selectedFontFamily, 
+         'font-size': titleFontSize + 'px', 
+         'margin': '10px 0', 
+         'font-weight': 'bold' 
+       }">
+    {{ slides[currentSlide]?.title || 'Titre de la slide' }}
+  </div>
 
-      <!-- Prévisualisation titre -->
-      <div class="title-preview"
-           [ngStyle]="{ 
-             'font-family': selectedFontFamily, 
-             'font-size': titleFontSize + 'px', 
-             'margin': '10px 0', 
-             'font-weight': 'bold' 
-           }">
-        {{ slides[currentSlide]?.title || 'Titre de la slide' }}
+  <!-- Liste des points (éditables) -->
+  <ul class="points-list">
+    <li *ngFor="let point of slides[currentSlide].content; let i = index">
+      <input
+        type="text"
+        [(ngModel)]="slides[currentSlide].content[i]"
+        class="point-input"
+        placeholder="Point clé"
+        [ngStyle]="{ 'font-size': contentFontSize + 'px', 'font-family': selectedFontFamily }"
+      />
+      <button (click)="removePoint(i)" class="btn-delete">×</button>
+    </li>
+  </ul>
+
+  <button (click)="addPoint()" class="btn">+ Ajouter un point</button>
+</main>
+
+
+    <!-- Export PDF caché -->
+    <div id="presentationToExport" style="position: absolute; left: -9999px; top: 0; width: 297mm; height: 210mm; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+      <div *ngFor="let slide of slides" class="slide-export-page" [ngStyle]="templateStyles">
+        <h2 [ngStyle]="{ 'font-family': selectedFontFamily, 'font-size': titleFontSize + 'px', 'font-weight': 'bold', 'margin': '10px 0' }">
+          {{ slide.title }}
+        </h2>
+        <ul>
+          <li *ngFor="let point of slide.content" [ngStyle]="{ 'font-family': selectedFontFamily, 'font-size': contentFontSize + 'px' }">
+            {{ point }}
+          </li>
+        </ul>
       </div>
-
-      <!-- Liste des points -->
-      <ul class="points-list">
-        <li *ngFor="let point of slides[currentSlide].content; let i = index">
-          <input
-            type="text"
-            [(ngModel)]="slides[currentSlide].content[i]"
-            class="point-input"
-            placeholder="Point clé"
-            [ngStyle]="{ 'font-size': contentFontSize + 'px', 'font-family': selectedFontFamily }"
-          />
-          <button (click)="removePoint(i)" class="btn-delete">×</button>
-        </li>
-      </ul>
-
-      <!-- Prévisualisation des points -->
-      <ul class="points-preview"
-          [ngStyle]="{ 
-            'font-family': selectedFontFamily, 
-            'font-size': contentFontSize + 'px', 
-            'margin-top': '10px' 
-          }">
-        <li *ngFor="let point of slides[currentSlide].content">{{ point || 'Point clé' }}</li>
-      </ul>
-
-      <button (click)="addPoint()" class="btn">+ Ajouter un point</button>
-    </main>
-  </div>
-
-  <!-- Export PDF caché -->
-  <div id="presentationToExport" style="position: absolute; left: -9999px;">
-    <div *ngFor="let slide of slides"
-         class="slide-export-page"
-         [ngStyle]="templateStyles">
-      <!-- Suppression du titre de la slide ici :
-      <h2>{{ slide.title }}</h2>
-      -->
-      <ul>
-        <li *ngFor="let point of slide.content">{{ point }}</li>
-      </ul>
     </div>
-  </div>
+
 
   <!-- Historique modal -->
   <div class="modal" [class.show]="showHistory" (click)="toggleHistory()">

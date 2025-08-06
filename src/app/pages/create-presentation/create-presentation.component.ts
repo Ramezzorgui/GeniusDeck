@@ -126,4 +126,8 @@ const selected = this.availableTemplates.find(t => t.id === +this.presentation.t
       this.currentSlide--;
     }
   }
+
+  goBack(): void {
+  window.history.back();
+}
 }

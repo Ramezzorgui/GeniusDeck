@@ -338,12 +338,20 @@
 /* STYLES POUR L'EXPORT PDF */
 /* =============================================================== */
 .slide-export-page {
-  width: 1280px;
-  min-height: 720px;
-  padding: 40px;
+  width: 260mm; /* max largeur pour A4 paysage avec marges */
+  min-height: 200mm; /* hauteur suffisante sans déborder */
+  padding: 20mm;
+  margin: auto;
   margin-bottom: 20px;
+  background-color: white;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
   page-break-after: always;
 }
+
 
 .slide-export-page h2 {
   font-size: 36px;
@@ -503,7 +511,7 @@
 }
 
 .btn-back {
-  margin-left: auto; /* pousse le bouton tout à droite */
+  margin-left: auto;
   background-color: #316fe2;
   color: white;
   border: none;
