@@ -360,9 +360,6 @@
   margin-bottom: 15px;
 }
 
-/* =============================================================== */
-/* MODAL POUR HISTORIQUE (POPUP) */
-/* =============================================================== */
 .modal {
   display: none;
   position: fixed;
@@ -376,79 +373,71 @@
 
 .modal.show {
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .modal-content {
-  background: white;
-  padding: 20px 30px;
-  border-radius: 8px;
-  max-height: 80vh;
-  overflow-y: auto;
-  width: 90%;
-  max-width: 500px;
-  position: relative;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-  font-family: Arial, sans-serif;
+  width: 80%; 
+  max-width: 900px; 
+  padding: 30px;
+  font-size: 1.2rem;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0px 5px 20px rgba(0,0,0,0.3);
 }
 
 .modal-content h3 {
-  margin-top: 0;
-  margin-bottom: 15px;
-  font-weight: 700;
-  font-size: 1.4rem;
-  color: #007bff;
-}
-
-.close-btn {
-  position: absolute;
-  top: 10px; right: 10px;
-  background: none;
-  border: none;
   font-size: 1.8rem;
-  line-height: 1;
-  cursor: pointer;
-  color: #999;
-  transition: color 0.2s ease;
-}
-
-.close-btn:hover {
-  color: #007bff;
-}
-
-.modal-content ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  margin-bottom: 20px;
 }
 
 .modal-content ul li {
+  font-size: 1.2rem;
+  margin-bottom: 12px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 8px 0;
-  border-bottom: 1px solid #eee;
-  font-size: 1rem;
-  color: #333;
+  gap: 10px;
 }
 
-.modal-content ul li button {
-  padding: 5px 12px;
-  font-size: 0.9rem;
-  background-color: #007bff;
+.modal-content button {
+  padding: 6px 12px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.modal-content .btn-delete {
+  background-color: #4d6bff;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
+}
+
+.modal-content .btn-delete:hover {
+  background-color: #0b53d7;
+}
+/* Bouton fermer (×) du modal */
+.close-btn {
+  font-size: 1.2rem; /* taille du symbole × */
+  width: 28px; /* largeur réduite */
+  height: 28px; /* hauteur réduite */
+  line-height: 24px; /* pour centrer verticalement le × */
+  text-align: center;
+  border: none;
+  background: transparent;
+  color: #333;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
-.modal-content ul li button:hover {
-  background-color: #0056b3;
+.close-btn:hover {
+  background-color: rgba(0,0,0,0.1);
+  border-radius: 50%;
 }
 
-/* =============================================================== */
-/* BARRE DE PERSONNALISATION EN HAUT */
-/* =============================================================== */
+
 .customization-bar {
   display: flex;
   align-items: center;
@@ -482,7 +471,6 @@
   font-size: 0.95rem;
 }
 
-/* Rendre les inputs transparents dans la version exportée */
 #presentationToExport input {
   background-color: transparent !important;
   border: none !important;
@@ -493,7 +481,6 @@
   font-size: inherit !important;
   padding: 0;
 }
-/* Rendre les inputs transparents dans l'éditeur */
 .slide-title,
 .point-input {
   background-color: transparent !important;
@@ -505,3 +492,29 @@
   font-weight: inherit !important;
   padding: 0 !important;
 }
+
+.editor-header {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+  position: relative;
+}
+
+.btn-back {
+  margin-left: auto; /* pousse le bouton tout à droite */
+  background-color: #316fe2;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn-back:hover {
+  background-color: #0841a3;
+}
+

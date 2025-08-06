@@ -13,9 +13,6 @@ import { BoardAdminComponent } from './board-admin/board-admin.component';
 import { BoardModeratorComponent } from './board-moderator/board-moderator.component';
 import { BoardUserComponent } from './board-user/board-user.component';
 import { authInterceptorProviders } from './_helpers/http.interceptor';
-import { PresentationListComponent } from './presentation-list/presentation-list.component';
-import { PresentationFormComponent } from './presentation-form/presentation-form.component';
-import { PresentationDetailsComponent } from './presentation-details/presentation-details.component';
 import { TemplateListComponent } from './template-list/template-list.component';
 import { TemplateFormComponent } from './template-form/template-form.component';
 import { TemplateDetailsComponent } from './template-details/template-details.component';
@@ -30,7 +27,6 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { UsersComponent } from './users/users.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { PresentationCreateComponent } from './presentation-create/presentation-create.component';
 import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
 import { PresentationBriefComponent } from './components/presentation-brief/presentation-brief.component';
 import { CreatePresentationComponent } from './pages/create-presentation/create-presentation.component';
@@ -45,7 +41,7 @@ import { SideBarComponent } from './components/sidebar/sidebar.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from 'src/app/components/reset-password/reset-password.component';
 import { NgChartsModule } from 'ng2-charts';
-
+import { ProfileUserComponent } from './profile-user/profile-user.component';
 
 
 
@@ -60,9 +56,6 @@ import { NgChartsModule } from 'ng2-charts';
     BoardAdminComponent,
     BoardModeratorComponent,
     BoardUserComponent,
-    PresentationListComponent,
-    PresentationFormComponent,
-    PresentationDetailsComponent,
     TemplateListComponent,
     TemplateFormComponent,
     TemplateDetailsComponent,
@@ -75,7 +68,6 @@ import { NgChartsModule } from 'ng2-charts';
     NavbarComponent,
     UsersComponent,
     UserEditComponent,
-    PresentationCreateComponent,
     UserDashboardComponent,
     PresentationBriefComponent,
     CreatePresentationComponent,
@@ -86,6 +78,7 @@ import { NgChartsModule } from 'ng2-charts';
     SideBarComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
+    ProfileUserComponent,
     
    
 

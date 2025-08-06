@@ -1,33 +1,33 @@
-<!-- La barre de navigation principale -->
-<nav class="top-navbar">
-
-  <!-- Section de gauche : Logo et liens Admin -->
+<nav [ngClass]="isHomePage() ? 'top-navbar home-navbar' : 'top-navbar'">
   <div class="navbar-left">
     <a class="navbar-brand" routerLink="/">GeniusDeck</a>
-    
   </div>
 
-  <!-- Section de droite : Authentification -->
   <div class="navbar-right">
-    <!-- Affiche "Sign In" / "Sign Up" si l'utilisateur n'est pas connecté -->
+    <!-- Non connecté -->
     <div *ngIf="!isLoggedIn" class="auth-links">
-      <a routerLink="/login">Sign In</a>
-      <a routerLink="/register" class="btn-primary">Sign Up</a>
-    </div>
-
-    <!-- Affiche le nom et "Logout" si l'utilisateur est connecté -->
-    <div *ngIf="isLoggedIn" class="user-info">
-  <a [routerLink]="['/profile']" class="profile-link">
-    {{ username }}
-  </a>
-  <a (click)="logout()" class="logout-link">Logout</a>
+  <a routerLink="/login" [ngClass]="!isHomePage() ? 'dark-text' : ''">Sign In</a>
+  <a routerLink="/register"
+     class="btn-primary"
+     [ngClass]="!isHomePage() ? 'dark-btn-text' : ''">Sign Up</a>
 </div>
 
+    <!-- Connecté -->
+    <div *ngIf="isLoggedIn" class="user-info">
+      <a [routerLink]="getProfileRoute()"
+         class="profile-link"
+         [ngClass]="!isHomePage() ? 'dark-text' : ''">
+        {{ username }}
+      </a>
+      <a (click)="logout()"
+         class="logout-link"
+         [ngClass]="!isHomePage() ? 'dark-text' : ''">
+        Logout
+      </a>
+    </div>
   </div>
-
 </nav>
 
-<!-- La zone où les composants des routes sont affichés -->
 <main class="page-content">
   <router-outlet></router-outlet>
 </main>

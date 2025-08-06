@@ -9,7 +9,8 @@
     <div class="card" *ngFor="let pres of savedPresentations; let i = index">
       <h3>{{ pres.title || 'Sans titre' }}</h3>
       <p>Nombre de slides : {{ pres.slides.length }}</p>
-      <button (click)="loadPresentation(pres)" class="btn btn-success">📂 Charger</button>
+      <button (click)="loadPresentation(pres)">Charger</button>
+
       <button (click)="deletePresentation(i)" class="btn btn-danger">🗑️ Supprimer</button>
     </div>
   </div>

@@ -153,3 +153,30 @@ select.input {
   font-weight: bold;
   font-size: 0.9rem;
 }
+ .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-group label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #374151;
+  }
+
+  .input-hint {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-top: 4px;
+  }
+
+  .form-row {
+    display: flex;
+    gap: 20px;
+  }
+
+  @media (max-width: 768px) {
+    .form-row {
+      flex-direction: column;
+    }
+  }

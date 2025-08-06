@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChartConfiguration } from 'chart.js';
 import { UserService } from 'src/app/_services/user.service';
 import { PresentationService } from 'src/app/_services/presentation.service'
+import { CommentService } from 'src/app/_services/comment.service'
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -12,6 +13,7 @@ export class AdminDashboardComponent implements OnInit {
   totalUsers = 0;                // valeur initiale à 0
   activeUsers = 750;
   presentationsGenerated = 0;
+  allComments: CommentService[] = [];
 
   public pieChartData: ChartConfiguration<'pie'>['data'] = {
     labels: ['Admin', 'User', 'Anonym'],
@@ -41,13 +43,15 @@ export class AdminDashboardComponent implements OnInit {
   };
 
   constructor(private userService: UserService,
-    private presentationService: PresentationService) {}
+    private presentationService: PresentationService,
+  private commentService: CommentService) {}
 
   ngOnInit(): void {
     this.loadTotalUsers();
     this.loadPresentationsGenerated();
     this.loadUserRolesCount();
     this.loadActiveUsersMonthly();
+
 
   }
 
@@ -140,5 +144,19 @@ loadActiveUsersMonthly() {
       console.error('Erreur récupération active users monthly:', err);
     }
   });}
+
+  topTemplates = [
+  { name: 'Business Clean', usageCount: 120 },
+  { name: 'Dark Tech', usageCount: 97 },
+  { name: 'Modern Corporate', usageCount: 84 },
+  { name: 'Simple Slides', usageCount: 78 },
+  { name: 'Creative Pitch', usageCount: 67 }
+];
+
+recentFeedback = [
+  { username: 'Alice', message: 'Super outil ! Très pratique.' },
+  { username: 'Bob', message: 'Interface fluide et intuitive.' },
+  { username: 'Claire', message: 'Les modèles sont très pros.' }
+];
 
 }

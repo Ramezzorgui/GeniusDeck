@@ -1,10 +1,10 @@
 .navbar {
-  width: 100%;
-  padding: 0; /* Remove default padding */
-  margin: 0; /* Remove default margin */
-  background-color: #ffffff; /* Adjust background color as needed */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Keep shadow */
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px); /* optionnel mais élégant */
+  color: white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* facultatif */
 }
+
 
 .navbar .container-fluid {
   padding: 0; /* Remove padding from container-fluid */

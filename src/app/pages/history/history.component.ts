@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GenerationHistory, GenerationHistoryService } from 'src/app/_services/generation-history.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-history',
@@ -7,37 +7,20 @@ import { GenerationHistory, GenerationHistoryService } from 'src/app/_services/g
   styleUrls: ['./history.component.css']
 })
 export class HistoryComponent implements OnInit {
-  histories: GenerationHistory[] = [];
 
-  constructor(private historyService: GenerationHistoryService) {}
+  history: any[] = [];
+
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
-    this.loadHistories();
-  }
-
-  loadHistories(): void {
-    this.historyService.getAll().subscribe({
-      next: (data) => this.histories = data,
-      error: (err) => console.error('Erreur chargement historique:', err),
-    });
-  }
-
-  deleteHistory(id: number): void {
-    if (confirm('Supprimer cette entrée ?')) {
-      this.historyService.delete(id).subscribe(() => {
-        this.histories = this.histories.filter(h => h.id !== id);
-      });
+    const savedPresentations = localStorage.getItem('savedPresentations');
+    if (savedPresentations) {
+      this.history = JSON.parse(savedPresentations);
     }
   }
-  loadPresentation(presentationId: number | undefined): void {
-  if (!presentationId) return;
 
-  // Redirige vers une page existante qui affiche cette présentation
-  // Exemple : /presentation/123
-  // Crée cette route si elle n'existe pas encore
-  window.location.href = `/presentation/${presentationId}`;
-}
-
-
-
+  loadPresentation(id: number) {
+    // Naviguer vers l'éditeur avec l'ID en paramètre
+    this.router.navigate(['/edit-presentation'], { queryParams: { id } });
+  }
 }

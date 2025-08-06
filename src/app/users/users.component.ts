@@ -15,9 +15,14 @@ export class UsersComponent implements OnInit {
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
+    this.loadUsers();
+  }
+
+  loadUsers(): void {
+    this.loading = true;
     this.userService.getUsers().subscribe({
-      next: (data) => {
-        this.users = data;
+      next: (users) => {
+        this.users = users;
         this.loading = false;
       },
       error: (err) => {
@@ -25,6 +30,20 @@ export class UsersComponent implements OnInit {
         this.loading = false;
         console.error(err);
       }
+    });
+  }
+
+  blockUser(id: number): void {
+    this.userService.blockUser(id).subscribe({
+      next: () => this.loadUsers(),
+      error: (err) => console.error('Erreur lors du blocage', err)
+    });
+  }
+
+  unblockUser(id: number): void {
+    this.userService.unblockUser(id).subscribe({
+      next: () => this.loadUsers(),
+      error: (err) => console.error('Erreur lors du déblocage', err)
     });
   }
 }

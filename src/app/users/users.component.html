@@ -1,33 +1,54 @@
 <div class="dashboard-layout d-flex">
- <sidebar></sidebar>
-<div class="container mt-4">
-  <h2>Liste des utilisateurs</h2>
+  <sidebar></sidebar>
 
-  <div *ngIf="loading">Chargement...</div>
-  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+  <div class="container mt-4">
+    <h2 class="page-title">Liste des utilisateurs</h2>
 
-  <table *ngIf="!loading && !error" class="table table-striped">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nom</th>
-        <th>Email</th>
-        <th>Rôle</th>
-        <th>Date de création</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let user of users">
-        <td>{{ user.id }}</td>
-        <td>{{ user.name }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.role }}</td>
-        <td>{{ user.createdAt | date:'short' }}</td>
-        <td>
-          <a class="btn btn-sm btn-warning" [routerLink]="['/users/edit', user.id]">Modifier</a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+    <div *ngIf="loading" class="loading-spinner">Chargement...</div>
+    <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+    <div class="table-responsive">
+      <table *ngIf="!loading && !error" class="table custom-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Rôle</th>
+            <th>Date de création</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+              <span class="badge"
+                    [ngClass]="{
+                      'badge-admin': user.role === 'admin',
+                      'badge-user': user.role === 'user',
+                      'badge-other': user.role !== 'admin' && user.role !== 'user'
+                    }">
+                {{ user.role }}
+              </span>
+            </td>
+            <td>{{ user.createdAt | date:'short' }}</td>
+            <td>
+              <a
+                class="btn btn-sm btn-edit"
+                [routerLink]="['/users/edit', user.id]"
+              >
+                <i class="fas fa-edit"></i> Modifier
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
+
+<!-- Ajouter dans <head> si ce n'est pas fait -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> -->

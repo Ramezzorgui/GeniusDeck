@@ -22,7 +22,16 @@ export class TemplateListComponent implements OnInit {
     this.isLoading = true;
     this.service.getAll().subscribe({
       next: (data: Template[]) => {
-        this.templates = data;
+        this.templates = data.map(t => {
+  try {
+    const parsedStyles = JSON.parse(t.styles || '{}');
+    return { ...t, parsedColor: parsedStyles.color || '#ccc' };
+  } catch (e) {
+    console.warn(`Erreur parsing styles du template ID ${t.id}`, e);
+    return { ...t, parsedColor: '#ccc' };
+  }
+});
+
         this.isLoading = false;
       },
       error: (err) => {

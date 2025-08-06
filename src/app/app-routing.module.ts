@@ -8,9 +8,6 @@ import { ProfileComponent } from './profile/profile.component';
 import { BoardUserComponent } from './board-user/board-user.component';
 import { BoardModeratorComponent } from './board-moderator/board-moderator.component';
 import { BoardAdminComponent } from './board-admin/board-admin.component';
-import { PresentationDetailsComponent } from './presentation-details/presentation-details.component';
-import { PresentationListComponent } from './presentation-list/presentation-list.component';
-import { PresentationFormComponent } from './presentation-form/presentation-form.component';
 import { TemplateListComponent } from './template-list/template-list.component';
 import { TemplateFormComponent } from './template-form/template-form.component';
 import { TemplateDetailsComponent } from './template-details/template-details.component';
@@ -23,7 +20,6 @@ import { GenerationHistoryDetailsComponent } from './generation-history-details/
 import { AppComponent } from './app.component';
 import { UsersComponent } from './users/users.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
-import { PresentationCreateComponent } from './presentation-create/presentation-create.component'; 
 import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
 import { PresentationBriefComponent } from './components/presentation-brief/presentation-brief.component';
 import { CreatePresentationComponent } from './pages/create-presentation/create-presentation.component';
@@ -33,48 +29,46 @@ import { HistoryComponent } from './pages/history/history.component';
 import { ForgotPasswordComponent } from 'src/app/components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import{AdminDashboardComponent} from  'src/app/admin-dashboard/admin-dashboard.component';
+import { AuthGuard } from './guards/auth.guard';
+import { ProfileUserComponent } from './profile-user/profile-user.component';
+import { AdminGuard } from './guards/admin.guard';
+import { NonAdminGuard } from './guards/non-admin-guard.guard';
+
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
+  { path: 'home', component: HomeComponent, canActivate: [NonAdminGuard]},
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'user', component: BoardUserComponent },
-  { path: 'mod', component: BoardModeratorComponent },
-  { path: 'admin', component: BoardAdminComponent },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard,AdminGuard] },
+  { path: 'user', component: BoardUserComponent , canActivate: [AuthGuard]},
+  { path: 'mod', component: BoardModeratorComponent , canActivate: [AuthGuard]},
+  { path: 'admin', component: BoardAdminComponent , canActivate: [AuthGuard]},
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'presentations', component: PresentationListComponent },
-  { path: 'presentations/new', component: PresentationFormComponent },
-  { path: 'presentations/:id/edit', component: PresentationFormComponent },
-  { path: 'presentations/:id', component: PresentationDetailsComponent },
-  { path: 'templates',component: TemplateListComponent},
-  { path: 'templates/new',component: TemplateFormComponent},
-  { path: 'templates/edit/:id', component: TemplateFormComponent},
-  { path: 'templates/:id', component: TemplateDetailsComponent},
-  { path: 'slides', component: SlideListComponent },
-  { path: 'slides/add', component: SlideFormComponent },
-  { path: 'slides/edit/:id', component: SlideFormComponent },
-  { path: 'slides/details/:id', component: SlideDetailsComponent },
-  { path: 'generation-history', component: GenerationHistoryListComponent },
-  { path: 'generation-history/add', component: GenerationHistoryFormComponent },
-  { path: 'generation-history/edit/:id', component: GenerationHistoryFormComponent },
-  { path: 'generation-history/:id', component: GenerationHistoryDetailsComponent },
-  { path: 'home11', component: AppComponent },
-  { path: 'users', component: UsersComponent },
-  { path: 'users/edit/:id', component: UserEditComponent },
-  { path: 'presentations/neww', component: PresentationCreateComponent },
-  { path: 'dashboard', component: PresentationListComponent},
-  { path: 'presentations/newww', component: PresentationBriefComponent },
-  { path: 'dashboard', component: UserDashboardComponent },
-  { path: 'create-presentation', component: CreatePresentationComponent },
-  { path: 'edit-presentation', component: EditorPresentationComponent },
-  { path: 'saved-presentations', component: SavedPresentationsComponent },
-  { path: 'history', component: HistoryComponent },
+  { path: 'templates',component: TemplateListComponent, canActivate: [AuthGuard, AdminGuard]},
+  { path: 'templates/new',component: TemplateFormComponent, canActivate: [AuthGuard, AdminGuard]},
+  { path: 'templates/edit/:id', component: TemplateFormComponent, canActivate: [AuthGuard, AdminGuard]},
+  { path: 'templates/:id', component: TemplateDetailsComponent, canActivate: [AuthGuard, AdminGuard]},
+  { path: 'slides', component: SlideListComponent, canActivate: [AuthGuard] },
+  { path: 'slides/add', component: SlideFormComponent , canActivate: [AuthGuard]},
+  { path: 'slides/edit/:id', component: SlideFormComponent , canActivate: [AuthGuard]},
+  { path: 'slides/details/:id', component: SlideDetailsComponent , canActivate: [AuthGuard]},
+  { path: 'generation-history', component: GenerationHistoryListComponent , canActivate: [AuthGuard]},
+  { path: 'generation-history/add', component: GenerationHistoryFormComponent , canActivate: [AuthGuard]},
+  { path: 'generation-history/edit/:id', component: GenerationHistoryFormComponent , canActivate: [AuthGuard]},
+  { path: 'generation-history/:id', component: GenerationHistoryDetailsComponent , canActivate: [AuthGuard]},
+  { path: 'home11', component: AppComponent , canActivate: [AuthGuard]},
+  { path: 'users', component: UsersComponent , canActivate: [AuthGuard,AdminGuard]},
+  { path: 'users/edit/:id', component: UserEditComponent , canActivate: [AuthGuard]},
+  { path: 'presentations/newww', component: PresentationBriefComponent , canActivate: [AuthGuard]},
+  { path: 'dashboard', component: UserDashboardComponent , canActivate: [AuthGuard]},
+  { path: 'create-presentation', component: CreatePresentationComponent , canActivate: [AuthGuard,NonAdminGuard]},
+  { path: 'edit-presentation', component: EditorPresentationComponent , canActivate: [AuthGuard]},
+  { path: 'saved-presentations', component: SavedPresentationsComponent , canActivate: [AuthGuard]},
+  { path: 'history', component: HistoryComponent , canActivate: [AuthGuard, AdminGuard]},
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
-    { path: 'dashboard1', component: AdminDashboardComponent},
-
-
+  { path: 'dashboard1', component: AdminDashboardComponent, canActivate: [AuthGuard,AdminGuard]},
+  { path: 'profile-user', component: ProfileUserComponent, canActivate: [AuthGuard]},
 
 ];
 

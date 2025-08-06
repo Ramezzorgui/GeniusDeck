@@ -1,32 +1,41 @@
+<div class="dashboard-layout d-flex">
+ <sidebar></sidebar>
+<div class="dashboard-container flex-grow-1">
+  <header class="dashboard-header">
+    <h1 class="dashboard-title">Liste des Templates</h1>
+    <button class="create-button" routerLink="/templates/new">
+      + Ajouter un template
+    </button>
+  </header>
 
-  <div class="dashboard-container flex-grow-1">
-    <header class="dashboard-header">
-      <h1 class="dashboard-title">Liste des Templates</h1>
-      <button class="create-button" routerLink="/templates/new">
-        + Ajouter un template
-      </button>
-    </header>
+  <div *ngIf="templates.length > 0" class="template-grid">
+    <div *ngFor="let t of templates" class="template-card">
+      
+      <!-- Carré de couleur animé -->
+      <div class="template-color-square" [ngStyle]="{ 'background-color': t.parsedColor || '#ccc' }"></div>
 
-    <div *ngIf="templates.length > 0" class="template-grid">
-      <div *ngFor="let t of templates" class="template-card">
-        <div class="template-image">
-          <img *ngIf="t.previewImage" [src]="t.previewImage" alt="Preview" class="template-image"/>
-        </div>
-        <div class="template-info">
-          <h3>{{ t.name }}</h3>
-          <p>Catégorie : {{ t.category }}</p>
-          <p *ngIf="t.isPublic">🌐 Public</p>
-        </div>
-        <div class="template-actions">
-          <button (click)="viewTemplate(t.id!)">Voir</button>
-          <button (click)="editTemplate(t.id!)">Modifier</button>
-          <button (click)="deleteTemplate(t.id!)" class="delete-btn">🗑 Supprimer</button>
-        </div>
+      <!-- Image -->
+      <div class="template-image">
+        <img *ngIf="t.previewImage" [src]="t.previewImage" alt="Preview" class="template-image" />
       </div>
-    </div>
 
-    <div *ngIf="templates.length === 0" class="empty-state">
-      Aucun template disponible pour le moment.
+      <!-- Infos -->
+      <div class="template-info">
+        <h3>{{ t.name }}</h3>
+        <p>Catégorie : {{ t.category }}</p>
+        <p *ngIf="t.isPublic">🌐 Public</p>
+      </div>
+
+      <!-- Actions -->
+      <div class="template-actions">
+        <button (click)="viewTemplate(t.id!)">Voir</button>
+        <button (click)="editTemplate(t.id!)">Modifier</button>
+        <button (click)="deleteTemplate(t.id!)" class="delete-btn">🗑 Supprimer</button>
+      </div>
     </div>
   </div>
 
+  <div *ngIf="templates.length === 0" class="empty-state">
+    Aucun template disponible pour le moment.
+  </div>
+</div>

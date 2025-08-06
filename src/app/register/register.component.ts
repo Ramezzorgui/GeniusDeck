@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent {
   form: any = {
-    username: null,
+    name: null,
     email: null,
     password: null
   };
@@ -23,9 +23,11 @@ export class RegisterComponent {
   constructor(private authService: AuthService, private router: Router, private auth: Auth) { }
 
   onSubmit(): void {
-    const { username, email, password } = this.form;
+    const { name, email, password } = this.form;
 
-    this.authService.register(username, email, password).subscribe({
+    console.log('Valeurs envoyées :', this.form);
+
+    this.authService.register(name, email, password).subscribe({
       next: data => {
         console.log(data);
         this.isSuccessful = true;

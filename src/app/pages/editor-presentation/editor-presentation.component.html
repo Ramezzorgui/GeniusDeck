@@ -3,9 +3,9 @@
   <header class="editor-header">
     <button class="btn" (click)="savePresentation()">💾 Sauvegarder</button>
     <button class="btn" (click)="exportAsPDF()">📤 Exporter</button>
-    <button class="btn">🔗 Partager</button>
-    <button class="btn">⚙️ Paramètres</button>
     <button class="btn" (click)="toggleHistory()">📜 Historique</button>
+    <button class="btn btn-back" (click)="goBack()">← Retour</button>
+
   </header>
 
   <!-- Barre de personnalisation en haut -->
@@ -111,6 +111,7 @@
           <strong>Présentation sauvegardée le :</strong>
           {{ pres.savedAt | date:'short' }}
           <button (click)="loadPresentation(pres.id)">Charger</button>
+          <button (click)="deletePresentation(pres.id)" class="btn-delete">🗑 Supprimer</button>
         </li>
       </ul>
     </div>

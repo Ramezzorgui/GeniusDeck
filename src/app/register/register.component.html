@@ -8,7 +8,7 @@
     <form
       *ngIf="!isSuccessful"
       name="form"
-      (ngSubmit)="f.form.valid && onSubmit()"
+(ngSubmit)="onSubmit()"
       #f="ngForm"
       novalidate
     >
@@ -17,8 +17,8 @@
         <input
           type="text"
           class="form-control"
-          name="username"
-          [(ngModel)]="form.username"
+          name="name"
+          [(ngModel)]="form.name"
           required
           minlength="3"
           maxlength="20"
@@ -81,14 +81,6 @@
         Signup failed!<br />{{ errorMessage }}
       </div>
     </form>
-    <div class="text-center mt-3">
-  <button type="button" class="btn btn-outline-danger" (click)="signUpWithGoogle()">
-    <img src="https://img.icons8.com/color/16/000000/google-logo.png" class="me-2" />
-    S'inscrire avec Google
-  </button>
-</div>
-
-
     <div class="alert alert-success" *ngIf="isSuccessful">
       Your registration is successful!
     </div>

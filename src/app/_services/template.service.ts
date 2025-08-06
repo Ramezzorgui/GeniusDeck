@@ -14,6 +14,7 @@ export interface Template {
   createdBy?: any;
   previewImage?: string;
   mainColor?: string;
+  parsedColor?: string;
 }
 
 @Injectable({

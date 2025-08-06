@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-// Importez StorageService avec le bon chemin
 import { StorageService } from '../_services/storage.service';
+import { CommentService, Comment } from '../_services/comment.service';
+
 
 @Component({
   selector: 'app-home',
@@ -9,22 +10,37 @@ import { StorageService } from '../_services/storage.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
+ comments: any[] = [];
 
-  isDarkMode = false;
+  newComment: Comment = { username: '', content: '' };
+  isLoggedIn: boolean = false;
 
   constructor(
     private router: Router,
-    // Injectez StorageService
-    private storageService: StorageService
+    private storageService: StorageService,
+    private commentService: CommentService
   ) { }
 
+    ngOnInit(): void {
+       this.isLoggedIn = this.storageService.isLoggedIn();
+    this.getLatestComments();
+  }
+
+  getLatestComments(): void {
+    this.commentService.getLatest().subscribe({
+      next: (data) => {
+        this.comments = data;
+      },
+      error: (err) => {
+        console.error('Erreur lors du chargement des commentaires récents', err);
+      }
+    });
+  }
+
   startCreation(): void {
-    // Utilisez la méthode de StorageService pour vérifier la connexion
     if (this.storageService.isLoggedIn()) {
-      // Si connecté, redirige vers le dashboard
       this.router.navigate(['/dashboard']);
     } else {
-      // Si non connecté, redirige vers la page d'inscription
       this.router.navigate(['/login']);
     }
   }
@@ -36,10 +52,22 @@ export class HomeComponent {
       this.router.navigate(['/login']);
     }
   }
-
-  toggleTheme() {
-    this.isDarkMode = !this.isDarkMode;
+   selectTemplate(templateId: string): void {
+    console.log('Template sélectionné :', templateId);
   }
 
-  
+  loadComments(): void {
+    this.commentService.getComments().subscribe(data => {
+      this.comments = data;
+    });
+  }
+
+  submitComment(): void {
+    if (this.newComment.username && this.newComment.content) {
+      this.commentService.addComment(this.newComment).subscribe(() => {
+        this.newComment = { username: '', content: '' };
+        this.loadComments();
+      });
+    }
+  }
 }

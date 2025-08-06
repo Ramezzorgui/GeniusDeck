@@ -1,4 +1,12 @@
+<div class="dashboard-layout d-flex">
+ <sidebar></sidebar>
 <div class="main-card">
+  <div class="back-button-wrapper">
+  <button type="button" class="btn-back" (click)="goBack()">
+    <i class="material-icons me-1">arrow_back</i> Retour
+  </button>
+</div>
+
   <h2>{{ isEdit ? 'Modifier' : 'Créer' }} un Template</h2>
 
   <form (ngSubmit)="onSubmit()">

@@ -17,6 +17,7 @@ export class AppComponent implements OnInit {
   showAdminBoard = false;
   showModeratorBoard = false;
   username?: string;
+  currentUser: any; 
   title = 'angular-16-jwt-auth';
 
   eventBusSub?: Subscription;
@@ -28,9 +29,7 @@ export class AppComponent implements OnInit {
     public router: Router
   ) {}
 
-
   hideSidebar(): boolean {
-    // Liste des routes qui NE doivent PAS afficher la sidebar
     const noSidebarRoutes = ['/', '/home', '/dashboard'];
     return noSidebarRoutes.includes(this.router.url);
   }
@@ -39,18 +38,17 @@ export class AppComponent implements OnInit {
     this.isLoggedIn = this.storageService.isLoggedIn();
 
     if (this.isLoggedIn) {
-      const user = this.storageService.getUser();
-      console.log('Utilisateur connecté depuis storage :', user);
+      this.currentUser = this.storageService.getUser(); // ✅ affecté ici
+      console.log('Utilisateur connecté depuis storage :', this.currentUser);
 
-      this.roles = user.roles;
+      this.roles = this.currentUser.roles;
 
       this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
       this.showModeratorBoard = this.roles.includes('ROLE_USER');
 
-      this.username = user.name || user.username || user.email;
+      this.username = this.currentUser.name || this.currentUser.username || this.currentUser.email;
     }
 
-    // Écoute les événements logout (ex : token expiré)
     this.eventBusSub = this.eventBusService.on('logout', () => {
       this.logout();
     });
@@ -69,4 +67,16 @@ export class AppComponent implements OnInit {
       }
     });
   }
+
+  getProfileRoute(): string {
+    if (this.currentUser?.roles?.includes('ADMIN')) {
+      return '/profile';
+    } else if (this.currentUser?.roles?.includes('USER')) {
+      return '/profile-user';
+    }
+    return '/'; 
+  }
+  isHomePage(): boolean {
+  return this.router.url === '/' || this.router.url === '/home';
+}
 }

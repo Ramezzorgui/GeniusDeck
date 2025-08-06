@@ -1,63 +1,72 @@
-/* Barre de navigation principale */
+/* Barre principale */
 .top-navbar {
   display: flex;
-  justify-content: space-between; /* Pousse les sections gauche et droite aux extrémités */
+  justify-content: flex-start;
   align-items: center;
+  background-color: #ffffff;
   padding: 1rem 2rem;
-  background-color: white;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  height: 70px; /* Hauteur fixe */
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  height: 70px;
 }
 
-/* Section de gauche */
+/* Spécifique à la page d'accueil */
+.home-navbar {
+  background-color: #000000;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 .navbar-left {
   display: flex;
   align-items: center;
-  gap: 2rem; /* Espace entre le logo et les liens admin */
+  gap: 2rem;
 }
 
 .navbar-brand {
   font-size: 1.75rem;
   font-weight: bold;
-  color: #2563eb; /* Bleu de votre charte */
+  color: #2563eb;
   text-decoration: none;
 }
 
-/* Liens de l'admin */
+/* Liens admin */
 .admin-links {
   display: flex;
-  gap: 1.5rem; /* Espace entre chaque lien admin */
+  gap: 1.5rem;
 }
 
 .admin-links a {
   text-decoration: none;
-  color: #374151; /* Gris foncé */
+  color: #374151;
   font-weight: 500;
   padding-bottom: 4px;
-  border-bottom: 2px solid transparent; /* Ligne de soulignement inactive */
+  border-bottom: 2px solid transparent;
   transition: color 0.2s, border-color 0.2s;
 }
 
 .admin-links a:hover {
-  color: #111827; /* Noir doux */
+  color: #111827;
 }
 
 .admin-links a.active {
-  color: #2563eb; /* Bleu pour le lien actif */
-  border-bottom-color: #2563eb; /* Soulignement pour le lien actif */
+  color: #2563eb;
+  border-bottom-color: #2563eb;
 }
 
-
-/* Section de droite */
 .navbar-right {
   display: flex;
   align-items: center;
+  margin-left: auto;
 }
 
-.auth-links a, .user-info span, .user-info a {
+.auth-links a,
+.user-info span,
+.user-info a {
   margin-left: 1.5rem;
   text-decoration: none;
-  color: #34495e;
+  color: #f5f6f7; /* blanc par défaut */
 }
 
 .auth-links .btn-primary {
@@ -74,26 +83,28 @@
 .logout-link {
   cursor: pointer;
   font-weight: 500;
-  color: #e74c3c; /* Rouge pour la déconnexion */
+  color: #f5f6f7; /* blanc par défaut */
 }
 
-/* Contenu de la page principale */
+/* Classe appliquée dynamiquement pour le texte noir */
+.dark-text {
+  color: #000 !important;
+}
+
 .page-content {
-  /* Vous pouvez ajouter un padding ici si nécessaire pour que le contenu
-     ne soit pas collé à la barre de navigation */
   padding: 0rem;
 }
 
 .user-info {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 1rem;
 }
 
 .profile-link {
   font-weight: 600;
   text-decoration: none;
-  color: #007bff;
+  color: #f5f6f7; /* blanc par défaut */
   cursor: pointer;
 }
 

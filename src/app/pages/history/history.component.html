@@ -1,24 +1,28 @@
-<div class="history-container">
-  <h2>📜 Historique des présentations sauvegardées</h2>
+<div class="dashboard-layout d-flex">
+  <sidebar></sidebar>
 
-  <div *ngIf="histories.length === 0" class="empty">
-    Aucune génération enregistrée.
-  </div>
-
-  <div *ngFor="let h of histories" class="history-card">
-    <h3>{{ h.prompt | slice:0:60 }}...</h3>
-
-    <p><strong>Date :</strong> {{ h.createdAt | date:'short' }}</p>
-    <p><strong>ID Présentation :</strong> {{ h.presentation?.id }}</p>
-
-    <div class="response-preview">
-      <strong>Contenu :</strong>
-      <p>{{ h.response | slice:0:200 }}...</p>
-    </div>
-
-    <div class="actions">
-      <button (click)="loadPresentation(h.presentation?.id)">📂 Charger</button>
-      <button class="delete-btn" (click)="deleteHistory(h.id!)">🗑️ Supprimer</button>
-    </div>
+  <div class="table-responsive" style="flex-grow: 1;">
+    <table class="custom-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Utilisateur</th>
+          <th>Date de sauvegarde</th>
+          <th>Nombre de slides</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pres of history">
+          <td>{{ pres.id }}</td>
+          <td>{{ pres.user }}</td>
+          <td>{{ pres.savedAt | date:'medium' }}</td>
+          <td>{{ pres.slides.length }}</td>
+          <td>
+            <button class="btn-edit" (click)="loadPresentation(pres.id)">Charger</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

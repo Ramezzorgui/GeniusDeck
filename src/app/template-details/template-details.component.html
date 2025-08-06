@@ -1,5 +1,12 @@
+<div class="dashboard-layout d-flex">
+ <sidebar></sidebar>
 <div class="template-details-container">
-  <button class="back-button" (click)="goBack()">🔙 Retour</button>
+<div class="back-button-wrapper">
+  <button class="btn btn-back" (click)="goBack()">
+    <i class="material-icons me-1">arrow_back</i> Retour
+  </button>
+</div>
+
 
   <div *ngIf="template" class="template-presentation">
     <!-- Aperçu dynamique du template -->
@@ -24,17 +31,27 @@
     </div>
 
     <!-- Détails du template -->
-    <div class="info-box">
-      <h1>{{ template.name }}</h1>
-      <p><strong>Catégorie :</strong> {{ template.category }}</p>
-      <p><strong>Structure :</strong> {{ template.structure }}</p>
-      <p><strong>Styles :</strong> {{ template.styles }}</p>
-      <p>
-        <strong>Public :</strong>
-        <span [ngClass]="template.isPublic ? 'public-yes' : 'public-no'">
-          {{ template.isPublic ? 'Oui' : 'Non' }}
-        </span>
-      </p>
-    </div>
+<div class="info-box">
+  <h1 class="template-title">{{ template.name }}</h1>
+
+  <p><strong>Catégorie :</strong> <span class="text-muted">{{ template.category }}</span></p>
+
+  <div class="json-section">
+    <p><strong>Structure :</strong></p>
+    <pre class="json-block">{{ template.structure | json }}</pre>
   </div>
+
+  <div class="json-section">
+    <p><strong>Styles :</strong></p>
+    <pre class="json-block">{{ template.styles | json }}</pre>
+  </div>
+
+  <p>
+    <strong>Public :</strong>
+    <span [ngClass]="template.isPublic ? 'public-yes' : 'public-no'">
+      {{ template.isPublic ? 'Oui' : 'Non' }}
+    </span>
+  </p>
+</div>
+
 </div>

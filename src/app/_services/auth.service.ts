@@ -61,10 +61,18 @@ export class AuthService {
   }
 
   loginWithGoogle(idToken: string): Observable<any> {
-  return this.http.post(`http://localhost:8080/api/auth/google-login`, {}, {
-    headers: {
-      'Authorization': `Bearer ${idToken}`
-    }
-  });
+  return this.http.post(`${AUTH_API}google`, { idToken }, httpOptions).pipe(
+    tap((response: any) => {
+      if (response.accessToken) {
+        this.storageService.saveToken(response.accessToken); // ✅ sauvegarde token
+        this.storageService.saveUser(response);               // ✅ sauvegarde user
+      }
+    })
+  );
 }
+loginWithFacebookRedirect(): void {
+  window.location.href = 'http://localhost:8080/oauth2/authorization/facebook';
+}
+
+
 }

@@ -1,0 +1,86 @@
+
+/* Titre de la page */
+.page-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #1f2937;
+}
+
+/* Spinner de chargement */
+.loading-spinner {
+  font-style: italic;
+  color: #6b7280;
+  padding: 10px;
+}
+
+/* Table responsive */
+.table-responsive {
+  overflow-x: auto;
+}
+
+/* Tableau custom */
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.custom-table th {
+  background-color: #f3f4f6;
+  color: #374151;
+  font-weight: 600;
+  padding: 12px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.custom-table td {
+  padding: 12px;
+  font-size: 14px;
+  color: #4b5563;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* Bouton Modifier */
+.btn-edit {
+  background-color: #2563eb;
+  color: #fff !important;
+  padding: 6px 12px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-edit:hover {
+  background-color: #1e40af;
+  text-decoration: none;
+}
+
+/* Badges de rôles */
+.badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+  color: #fff;
+  display: inline-block;
+}
+
+.badge-admin {
+  background-color: #10b981; /* Vert */
+}
+
+.badge-user {
+  background-color: #3b82f6; /* Bleu */
+}
+
+.badge-other {
+  background-color: #f59e0b; /* Orange */
+}

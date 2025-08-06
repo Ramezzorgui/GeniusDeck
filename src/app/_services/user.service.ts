@@ -11,6 +11,7 @@ export interface User {
   name: string;
   role: string;
   createdAt: string;
+  blocked: boolean;
 }
 
 @Injectable({
@@ -58,5 +59,13 @@ getActiveUsersMonthly(): Observable<{labels: string[], data: number[]}> {
 updateImageUrl(userId: number, imageUrl: string) {
   return this.http.put(`http://localhost:8080/users/${userId}/image`, { imageUrl });
 }
+blockUser(id: number): Observable<any> {
+  return this.http.put(`http://localhost:8080/api/admin/users/${id}/block`, {});
+}
+
+unblockUser(id: number): Observable<any> {
+  return this.http.put(`http://localhost:8080/api/admin/users/${id}/unblock`, {});
+}
+
 
 }

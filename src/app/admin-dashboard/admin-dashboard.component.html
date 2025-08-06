@@ -32,6 +32,28 @@
         <h4>Weekly Activity</h4>
         <canvas baseChart [data]="lineChartData" [options]="lineChartOptions" [type]="'line'"></canvas>
       </div>
+
+      <!-- New Professional Insights Section -->
+<div class="insights-section">
+  <div class="insight-card">
+    <h4>Top 5 Most Used Templates</h4>
+    <ul>
+      <li *ngFor="let template of topTemplates">{{ template.name }} - {{ template.usageCount }} uses</li>
+    </ul>
+  </div>
+
+  <div class="insight-card">
+    <h4>Recent User Feedback</h4>
+    <ul>
+      <li *ngFor="let feedback of recentFeedback">{{ feedback.username }}: "{{ feedback.message }}"</li>
+    </ul>
+  </div>
+
+  
+</div>
+
     </div>
+
+    
   </div>
 </div>

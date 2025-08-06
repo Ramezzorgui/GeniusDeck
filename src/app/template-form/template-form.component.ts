@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Template, TemplateService } from '../_services/template.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
+
 
 
 @Component({
@@ -22,7 +24,8 @@ export class TemplateFormComponent implements OnInit {
   constructor(
     private service: TemplateService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
@@ -79,6 +82,10 @@ export class TemplateFormComponent implements OnInit {
       });
     }
   }
+
+  goBack() {
+  this.location.back();
+}
 
 
   
