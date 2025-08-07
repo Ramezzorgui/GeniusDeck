@@ -16,4 +16,5 @@ public interface PresentationRepository extends JpaRepository<Presentation, Long
     // Vérifie si une présentation existe avec cet ID et propriétaire (plus efficace pour la suppression)
     boolean existsByIdAndUserId(Long id, Long userId);
 
+
 }
