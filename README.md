@@ -60,17 +60,13 @@ root/
 │ └── src/assets/
 └── README.md # Documentation
 
-yaml
-Copier
-Modifier
-
 ---
 
 🚀 Installation & Launch
 
 **Prerequisites**
 - Java 17+
-- Node.js v18+
+- Angular CLI v18+
 - PostgreSQL 15+
 - Maven
 - npm
@@ -88,18 +84,12 @@ spring:
 gemini:
   api-key: your_gemini_api_key
 1. Backend (Spring Boot)
-bash
-Copier
-Modifier
 cd backend
 ./mvnw clean install
 ./mvnw spring-boot:run
 📍 REST API available at: http://localhost:8080
 
 2. Frontend (Angular)
-bash
-Copier
-Modifier
 cd frontend
 npm install
 ng serve --open
@@ -135,20 +125,14 @@ Role-based access control (RBAC).
 🚀 Deployment
 
 Frontend: Deployed on Netlify
-(Add your Netlify live link here)
+https://willowy-chebakia-07cb0b.netlify.app/home
 
 Backend: Deployed on Railway
-(Add your Railway live API link here)
+geniusdeck-backend-production.up.railway.app
 
 👨‍💻 Team
 
 Zorgui Ramez (Full Stack Developer)
-
-[Add other members if applicable]
-
-🎓 Class: [Your Class Here]
-👥 Group: [Your Group Here]
-🧑‍🏫 Supervised by: [Supervisor Name]
 
 📌 Final Remarks
 
@@ -161,10 +145,6 @@ Real-time collaboration.
 Integration with Google Slides.
 
 Advanced AI prompts for better design suggestions.
-
-yaml
-Copier
-Modifier
 
 ---
 
