@@ -86,18 +86,14 @@ spring:
 gemini:
   api-key: your_gemini_api_key
 1. Backend (Spring Boot)
-bash
-Copier
-Modifier
+
 cd backend
 ./mvnw clean install
 ./mvnw spring-boot:run
 📍 REST API available at: http://localhost:8080
 
 2. Frontend (Angular)
-bash
-Copier
-Modifier
+
 cd frontend
 npm install
 ng serve --open
