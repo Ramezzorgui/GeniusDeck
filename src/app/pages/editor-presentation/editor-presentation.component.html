@@ -2,7 +2,25 @@
   <!-- Barre d'action du haut -->
   <header class="editor-header">
     <button class="btn" (click)="savePresentation()">💾 Sauvegarder</button>
-    <button class="btn" (click)="exportAsPDF()">📤 Exporter</button>
+      <div class="dropdown">
+  <button class="btn">📤 Exporter ▼</button>
+  <div class="dropdown-content">
+    <a (click)="exportAsPDF()">
+      <i class="fas fa-file-pdf"></i> Exporter en PDF
+    </a>
+    <a (click)="exportCurrentSlideAsImage('png')">
+      <i class="fas fa-file-image"></i> Slide actuelle (PNG)
+    </a>
+    <a (click)="exportCurrentSlideAsImage('jpeg')">
+      <i class="fas fa-file-image"></i> Slide actuelle (JPG)
+    </a>
+    <a (click)="exportAsPptx()">
+      <i class="fas fa-file-powerpoint"></i> Exporter en PowerPoint (Office 365)
+    </a>
+  </div>
+</div>
+
+
     <button class="btn" (click)="toggleHistory()">📜 Historique</button>
     <button class="btn btn-back" (click)="goBack()">← Retour</button>
 
@@ -24,6 +42,7 @@
     <label>Taille titre :
       <input type="number" [(ngModel)]="titleFontSize" min="10" max="72">
     </label>
+    
 
     <label>Taille contenu :
       <input type="number" [(ngModel)]="contentFontSize" min="10" max="48">
@@ -55,6 +74,8 @@
     {{ slides[currentSlide]?.title || 'Titre de la slide' }}
   </div>
 
+
+
   <!-- Liste des points (éditables) -->
   <ul class="points-list">
     <li *ngFor="let point of slides[currentSlide].content; let i = index">
@@ -68,6 +89,7 @@
       <button (click)="removePoint(i)" class="btn-delete">×</button>
     </li>
   </ul>
+
 
   <button (click)="addPoint()" class="btn">+ Ajouter un point</button>
 </main>

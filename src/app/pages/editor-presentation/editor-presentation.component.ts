@@ -4,6 +4,8 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { TemplateService, Template } from 'src/app/_services/template.service';
 import { ActivatedRoute } from '@angular/router';
+import PptxGenJS from "pptxgenjs";
+
 
 
 @Component({
@@ -23,6 +25,13 @@ export class EditorPresentationComponent implements OnInit {
   titleFontSize: number = 24;
   contentFontSize: number = 16;
 
+  // Nouvelles variables pour les couleurs
+titleColor: string = '#000000';   // noir par défaut
+contentColor: string = '#000000'; // noir par défaut
+
+availableFonts: string[] = [
+  'Arial', 'Georgia', 'Times New Roman', 'Verdana', 'Courier New'
+];
   constructor(
     private presentationDataService: PresentationDataService,
     private templateService: TemplateService,
@@ -149,8 +158,65 @@ export class EditorPresentationComponent implements OnInit {
   });
 }
 
+exportCurrentSlideAsImage(format: 'png' | 'jpeg') {
+  const slideEl = document.querySelector('.slide-editor') as HTMLElement;
+  if (!slideEl) {
+    alert('Aucune slide visible à exporter.');
+    return;
+  }
 
-  /** Sauvegarde la présentation avec la template choisie */
+  this.isExporting = true;
+
+  html2canvas(slideEl, { scale: 2 }).then((canvas) => {
+    const imgData = canvas.toDataURL(`image/${format}`, 1.0);
+    const link = document.createElement('a');
+    link.href = imgData;
+    link.download = `slide_${this.currentSlide + 1}.${format}`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    this.isExporting = false;
+    alert(`Slide ${this.currentSlide + 1} exportée en ${format.toUpperCase()} avec succès !`);
+  });
+}
+
+exportAsPptx(): void {
+  let pptx = new PptxGenJS();
+
+  this.slides.forEach((slideData, index) => {
+    let slide = pptx.addSlide();
+
+    slide.addText(slideData.title || `Slide ${index + 1}`, {
+      x: 0.5,
+      y: 0.5,
+      w: 9, 
+      h: 1,
+      fontSize: this.titleFontSize || 32,
+      bold: true,
+      color: "2F5496", 
+      align: "center"
+    });
+
+    let pointsText = slideData.content
+      .map(point => `• ${point}`)
+      .join("\n");
+
+    slide.addText(pointsText, {
+      x: 1,
+      y: 1.2, 
+      w: 8,
+      h: 4,
+      fontSize: this.contentFontSize || 20,
+      color: "000000",
+      align: "left",
+      bullet: false 
+    });
+  });
+
+  pptx.writeFile({ fileName: "presentation_office365.pptx" });
+}
+
+
   savePresentation() {
     const userData = sessionStorage.getItem('auth-user');
     if (!userData) {

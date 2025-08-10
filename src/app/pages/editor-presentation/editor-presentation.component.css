@@ -422,7 +422,7 @@
 }
 
 .modal-content .btn-delete:hover {
-  background-color: #0b53d7;
+  background-color: #007bff;
 }
 /* Bouton fermer (×) du modal */
 .close-btn {
@@ -523,6 +523,57 @@
 }
 
 .btn-back:hover {
-  background-color: #0841a3;
+  background-color: #386ecb;
 }
 
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown .btn {
+  background-color: #007bff; /* Couleur bouton */
+  color: white;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown .btn:hover {
+  background-color: #007bff;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 180px;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.15);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 10px 12px;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+
+.dropdown-content a i {
+  margin-right: 6px;
+  color: #555;
+}
+.dropdown-content a:hover i {
+  color: #000;
+}
