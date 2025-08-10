@@ -1,91 +1,137 @@
-# Angular 16 JWT Authentication & Authorization example with Rest API
+📊 GeniusDeck — Automated Presentation Creator
 
-Build Angular 16 JWT Authentication & Authorization example with Rest Api, HttpOnly Cookie and JWT (including HttpInterceptor, Router & Form Validation).
-- JWT Authentication Flow for User Registration (Signup) & User Login
-- Project Structure with HttpInterceptor, Router
-- Way to implement HttpInterceptor
-- How to store JWT token in HttpOnly Cookie
-- Creating Login, Signup Components with Form Validation
-- Angular Components for accessing protected Resources
-- How to add a dynamic Navigation Bar to Angular App
-- Working with Browser Session Storage
+📌 Project Description
+GeniusDeck is an innovative web application designed to automatically generate professional presentations from a simple user brief using AI (Gemini API).
 
-## Flow for User Registration and User Login
-For JWT – Token based Authentication with Rest API, we’re gonna call 2 endpoints:
-- POST `api/auth/signup` for User Registration
-- POST `api/auth/signin` for User Login
-- POST `api/auth/signout` for User Logout
+💡 Key features:
 
-You can take a look at following flow to have an overview of Requests and Responses that Angular 16 JWT Authentication & Authorization Client will make or receive.
+Intelligent generation of slide structure and content.
+Real-time editing and customization.
+Multi-format export (PDF, PPTX, PNG/JPEG).
+Template management and personalization.
+🧾 Table of Contents
 
-![angular-16-jwt-authentication-authorization-flow](angular-16-jwt-authentication-authorization-flow.png)
+Features
+Project Structure
+Installation & Launch
+Backend (Spring Boot)
+Frontend (Angular)
+Technologies Used
+Authentication and Roles
+Security
+Deployment
+Team
+Final Remarks
+✅ Features
 
-## Angular JWT App Diagram with Router and HttpInterceptor
-![angular-16-jwt-authentication](angular-16-jwt-authentication.png)
+General
 
-For more detail, please visit the tutorial:
-> [Angular 16 JWT Authentication & Authorization with Web API example](https://www.bezkoder.com/angular-16-jwt-auth/)
+AI-powered structure and content generation (Gemini API).
+Real-time preview of modifications.
+Multi-format export: PDF, PPTX, PNG/JPG.
+Password reset with secure email verification link
+Users
 
-> [Angular 16 Logout when Token is expired](https://www.bezkoder.com/logout-when-token-expired-angular-16/)
+Account creation and login.
+Manage personal presentations.
+Save, edit, and delete presentations.
+Templates
 
-> [Angular 16 Refresh Token with Interceptor & JWT example](https://www.bezkoder.com/angular-16-refresh-token/)
+Predefined templates (Business, Education, Pitch, Report…).
+Create and save custom templates.
+Community-shared template library.
+Editing
 
-## With Spring Boot back-end
+WYSIWYG editor.
+Drag-and-drop slide organization.
+Change colors, fonts, and layout.
+Undo/Redo with version history.
+🗂 Project Structure root/ ├── backend/ # Backend: Spring Boot (REST API) │ ├── src/main/java/ │ └── src/main/resources/ ├── frontend/ # Frontend: Angular │ ├── src/app/ │ └── src/assets/ └── README.md # Documentation
 
-> [Angular 16 + Spring Boot: JWT Authentication and Authorization example](https://www.bezkoder.com/angular-16-spring-boot-jwt-auth/)
+🚀 Installation & Launch
 
-## With Node.js Express back-end
+Prerequisites
 
-> [Angular 16 + Node.js Express: JWT Authentication and Authorization example](https://www.bezkoder.com/node-js-angular-16-jwt-auth/)
+Java 17+
+Angular CLI v18+
+PostgreSQL 17+
+Maven
+npm
+Gemini API Key
+Configuration Create a .env or application.yml in the backend:
 
-Run `ng serve --port 8081` for a dev server. Navigate to `http://localhost:8081/`.
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/geniusdeck
+    username: user
+    password: pass
+gemini:
+  api-key: your_gemini_api_key
+1. Backend (Spring Boot)
+bash
+Copier
+Modifier
+cd backend
+./mvnw clean install
+./mvnw spring-boot:run
+📍 REST API available at: http://localhost:8080
 
-## More practice
-> [Angular 16 CRUD example with Rest API](https://www.bezkoder.com/angular-16-crud-example/)
+2. Frontend (Angular)
+bash
+Copier
+Modifier
+cd frontend
+npm install
+ng serve --open
+📍 App available at: http://localhost:4200
 
-> [Angular 16 Pagination example](https://www.bezkoder.com/angular-16-pagination-ngx/)
+🛠 Technologies Used
 
-> [Angular 16 File upload example with Progress bar](https://www.bezkoder.com/angular-16-file-upload/)
+Layer	Technologies
+Backend	Java 17, Spring Boot 3.x, Spring Data JPA, PostgreSQL, Maven
+Frontend	Angular 17, TypeScript, HTML5, SCSS/TailwindCSS
+Export	iTextPDF (PDF), Apache POI (PPTX), ImageIO (PNG/JPG)
+AI Integration	Gemini API
+Authentication	Spring Security, JWT
 
-> [Angular 16 Form Validation example](https://www.bezkoder.com/angular-16-form-validation/)
+👤 Authentication and Roles
 
-Fullstack with Node:
-> [Angular 16 + Node Express + MySQL example](https://www.bezkoder.com/angular-16-node-js-express-mysql/)
+Anonymous User: Can try limited presentation creation.
 
-> [Angular 16 + Node Express + PostgreSQL example](https://www.bezkoder.com/angular-16-node-js-express-postgresql/)
+Registered User: Full access to presentation creation, editing, and export.
 
-> [Angular 16 + Node Express + MongoDB example](https://www.bezkoder.com/angular-16-node-js-express-mongodb/)
+Admin: Manage templates, users, and system configurations.
 
-> [Angular 16 + Node Express: File upload example](https://www.bezkoder.com/angular-16-node-express-file-upload/)
+🔐 Security
 
-Fullstack with Spring Boot:
-> [Angular 16 + Spring Boot example](https://www.bezkoder.com/spring-boot-angular-16-crud/)
+JWT authentication with Spring Security.
 
-> [Angular 16 + Spring Boot + MySQL example](https://www.bezkoder.com/spring-boot-angular-16-mysql/)
+Password hashing with BCrypt.
 
-> [Angular 16 + Spring Boot + PostgreSQL example](https://www.bezkoder.com/spring-boot-angular-16-postgresql/)
+Input validation on backend and frontend.
 
-> [Angular 16 + Spring Boot + MongoDB example](https://www.bezkoder.com/spring-boot-angular-16-mongodb/)
+Role-based access control (RBAC).
 
-> [Angular 16 + Spring Boot: File upload example](https://www.bezkoder.com/angular-16-spring-boot-file-upload/)
+🚀 Deployment
 
-Fullstack with Django:
-> [Angular + Django example](https://www.bezkoder.com/django-angular-13-crud-rest-framework/)
+Frontend: Deployed on Netlify
+https://willowy-chebakia-07cb0b.netlify.app/home
 
-> [Angular + Django + MySQL](https://www.bezkoder.com/django-angular-mysql/)
+Backend: Deployed on Railway
+geniusdeck-backend-production.up.railway.app
 
-> [Angular + Django + PostgreSQL](https://www.bezkoder.com/django-angular-postgresql/)
+👨‍💻 Team
 
-> [Angular + Django + MongoDB](https://www.bezkoder.com/django-angular-mongodb/)
+Zorgui Ramez (Full Stack Developer)
 
-Serverless with Firebase:
-> [Angular 16 Firebase CRUD with Realtime DataBase](https://www.bezkoder.com/angular-16-firebase-crud/)
+📌 Final Remarks
 
-> [Angular 16 Firestore CRUD example](https://www.bezkoder.com/angular-16-firestore-crud/)
+The project is actively under development.
 
-> [Angular 16 Firebase Storage: File Upload/Display/Delete example](https://www.bezkoder.com/angular-16-firebase-storage/)
+Upcoming features:
 
-Integration (run back-end & front-end on same server/port)
-> [How to integrate Angular with Node Restful Services](https://www.bezkoder.com/integrate-angular-12-node-js/)
+Real-time collaboration.
 
-> [How to Integrate Angular with Spring Boot Rest API](https://www.bezkoder.com/integrate-angular-12-spring-boot/)
+Integration with Google Slides.
+
+Advanced AI prompts for better design suggestions.
