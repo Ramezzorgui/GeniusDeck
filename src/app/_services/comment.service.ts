@@ -11,7 +11,7 @@ export interface Comment {
 
 @Injectable({ providedIn: 'root' })
 export class CommentService {
-  private apiUrl = 'http://localhost:8080/api/comments';
+  private apiUrl = 'http://localhost:8081/api/comments';
 
   constructor(private http: HttpClient) {}
 
@@ -24,7 +24,7 @@ export class CommentService {
   }
 
   getLatest() {
-  return this.http.get<any[]>('http://localhost:8080/api/comments/latest');
+  return this.http.get<any[]>('http://localhost:8081/api/comments/latest');
 }
 
 getAllCommentsForAdmin(): Observable<Comment[]> {

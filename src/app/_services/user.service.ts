@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 // URL de ton API utilisateurs
-const USERS_API_URL = 'http://localhost:8080/users';
+const USERS_API_URL = 'http://localhost:8081/users';
 
 export interface User {
   id: number;
@@ -27,44 +27,44 @@ export class UserService {
 
   // Les autres méthodes que tu as déjà
   getPublicContent(): Observable<any> {
-    return this.http.get('http://localhost:8080/api/test/all', { responseType: 'text' });
+    return this.http.get('http://localhost:8081/api/test/all', { responseType: 'text' });
   }
 
   getUserBoard(): Observable<any> {
-    return this.http.get('http://localhost:8080/api/test/user', { responseType: 'text' });
+    return this.http.get('http://localhost:8081/api/test/user', { responseType: 'text' });
   }
   
   getModeratorBoard(): Observable<any> {
-    return this.http.get('http://localhost:8080/api/test/mod', { responseType: 'text' });
+    return this.http.get('http://localhost:8081/api/test/mod', { responseType: 'text' });
   }
 
   getAdminBoard(): Observable<any> {
-    return this.http.get('http://localhost:8080/api/test/admin', { responseType: 'text' });
+    return this.http.get('http://localhost:8081/api/test/admin', { responseType: 'text' });
   }
 
   updateUser(id: number, user: Partial<User>): Observable<User> {
-  return this.http.put<User>(`http://localhost:8080/users/${id}`, user);
+  return this.http.put<User>(`http://localhost:8081/users/${id}`, user);
   }
   getUsersCount(): Observable<{ count: number }> {
-      return this.http.get<{ count: number }>(`http://localhost:8080/users/count`);
+      return this.http.get<{ count: number }>(`http://localhost:8081/users/count`);
     }
   getUserRolesCount(): Observable<{ [role: string]: number }> {
-  return this.http.get<{ [role: string]: number }>('http://localhost:8080/users/roles-count');
+  return this.http.get<{ [role: string]: number }>('http://localhost:8081/users/roles-count');
 }
 
 getActiveUsersMonthly(): Observable<{labels: string[], data: number[]}> {
-  return this.http.get<{labels: string[], data: number[]}>('http://localhost:8080/users/active-monthly');
+  return this.http.get<{labels: string[], data: number[]}>('http://localhost:8081/users/active-monthly');
 }
 
 updateImageUrl(userId: number, imageUrl: string) {
-  return this.http.put(`http://localhost:8080/users/${userId}/image`, { imageUrl });
+  return this.http.put(`http://localhost:8081/users/${userId}/image`, { imageUrl });
 }
 blockUser(id: number): Observable<any> {
-  return this.http.put(`http://localhost:8080/api/admin/users/${id}/block`, {});
+  return this.http.put(`http://localhost:8081/api/admin/users/${id}/block`, {});
 }
 
 unblockUser(id: number): Observable<any> {
-  return this.http.put(`http://localhost:8080/api/admin/users/${id}/unblock`, {});
+  return this.http.put(`http://localhost:8081/api/admin/users/${id}/unblock`, {});
 }
 
 

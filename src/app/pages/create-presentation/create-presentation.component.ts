@@ -104,10 +104,10 @@ const selected = this.availableTemplates.find(t => t.id === +this.presentation.t
     const data = new FormData();
     data.append('image', this.selectedFile!);
 
-    this.http.post<{ filename: string }>('http://localhost:8080/api/presentations/upload-image', data)
+    this.http.post<{ filename: string }>('http://localhost:8081/api/presentations/upload-image', data)
       .subscribe({
         next: (res) => {
-          this.uploadedImageUrl = `http://localhost:8080/uploads/${res.filename}`;
+          this.uploadedImageUrl = `http://localhost:8081/uploads/${res.filename}`;
           console.log('Image enregistrée :', this.uploadedImageUrl);
           this.router.navigate(['/edit-presentation']);
         },

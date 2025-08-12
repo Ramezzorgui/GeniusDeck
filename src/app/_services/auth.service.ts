@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { StorageService } from './storage.service';
 import { tap } from 'rxjs/operators';
 
-const AUTH_API = 'http://localhost:8080/api/auth/';
+const AUTH_API = 'http://localhost:8081/api/auth/';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -44,7 +44,7 @@ export class AuthService {
     );
   }
   forgotPassword(email: string) {
-  return this.http.post('http://localhost:8080/api/auth/forgot-password', { email });
+  return this.http.post('http://localhost:8081/api/auth/forgot-password', { email });
 }
 
     resetPassword(token: string, newPassword: string): Observable<any> {
@@ -71,7 +71,7 @@ export class AuthService {
   );
 }
 loginWithFacebookRedirect(): void {
-  window.location.href = 'http://localhost:8080/oauth2/authorization/facebook';
+  window.location.href = 'http://localhost:8081/oauth2/authorization/facebook';
 }
 
 

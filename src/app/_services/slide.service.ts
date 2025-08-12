@@ -15,7 +15,7 @@ export interface Slide {
   providedIn: 'root'
 })
 export class SlideService {
-  private apiUrl = 'http://localhost:8080/slides';
+  private apiUrl = 'http://localhost:8081/slides';
 
   constructor(private http: HttpClient) {}
 

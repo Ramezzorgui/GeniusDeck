@@ -15,7 +15,7 @@ export interface GenerationHistory {
   providedIn: 'root'
 })
 export class GenerationHistoryService {
-  private apiUrl = 'http://localhost:8080/api/generationHistory';
+  private apiUrl = 'http://localhost:8081/api/generationHistory';
 
   constructor(private http: HttpClient) {}
 
