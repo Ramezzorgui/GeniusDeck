@@ -15,6 +15,7 @@
 	<artifactId>generator</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>presentationGenerator</name>
+	<packaging>jar</packaging>
 	<description>Créateur de présentation automatisé</description>
 
 	<properties>
