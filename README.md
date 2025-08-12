@@ -75,7 +75,7 @@ root/
 **Configuration**
 Create a `.env` or `application.yml` in the backend:
 
-```yaml
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/geniusdeck
