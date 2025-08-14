@@ -34,16 +34,23 @@ export class UsersComponent implements OnInit {
   }
 
   blockUser(id: number): void {
+  if (confirm('Voulez-vous vraiment bloquer cet utilisateur ?')) {
     this.userService.blockUser(id).subscribe({
       next: () => this.loadUsers(),
       error: (err) => console.error('Erreur lors du blocage', err)
     });
   }
+}
 
-  unblockUser(id: number): void {
+unblockUser(id: number): void {
+  if (confirm('Voulez-vous vraiment débloquer cet utilisateur ?')) {
     this.userService.unblockUser(id).subscribe({
       next: () => this.loadUsers(),
       error: (err) => console.error('Erreur lors du déblocage', err)
     });
   }
+}
+
+
+  
 }

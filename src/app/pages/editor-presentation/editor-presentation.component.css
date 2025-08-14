@@ -521,6 +521,15 @@
   font-weight: bold;
   transition: background-color 0.3s ease;
 }
+.point-input-custom {
+  font-weight: normal; /* si besoin */
+}
+
+.point-input-custom {
+  font-size: var(--point-font-size);
+  font-family: var(--point-font-family);
+  color: var(--point-color);
+}
 
 .btn-back:hover {
   background-color: #386ecb;

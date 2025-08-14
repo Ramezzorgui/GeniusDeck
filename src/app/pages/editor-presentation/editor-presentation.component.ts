@@ -115,16 +115,23 @@ availableFonts: string[] = [
   }
 
   addPoint() {
-    if (this.slides[this.currentSlide]) {
-      this.slides[this.currentSlide].content.push('');
-    }
+  if (!this.slides[this.currentSlide]) {
+    this.slides[this.currentSlide] = { title: '', content: [] };
   }
+  this.slides[this.currentSlide].content.push('');
+}
 
-  removePoint(index: number) {
-    if (this.slides[this.currentSlide]) {
-      this.slides[this.currentSlide].content.splice(index, 1);
-    }
+removePoint(index: number) {
+  if (this.slides[this.currentSlide] && this.slides[this.currentSlide].content.length > index) {
+    this.slides[this.currentSlide].content.splice(index, 1);
   }
+}
+updatePoint(value: string, index: number) {
+  if (this.slides[this.currentSlide] && this.slides[this.currentSlide].content.length > index) {
+    this.slides[this.currentSlide].content[index] = value;
+  }
+}
+
 
   exportAsPDF() {
   const slides = document.querySelectorAll('#presentationToExport > div.slide-export-page');
@@ -350,9 +357,6 @@ goBack(): void {
   window.history.back();
 }
 
-updatePoint(value: string, index: number) {
-  this.slides[this.currentSlide].content[index] = value;
-}
 
 
 }

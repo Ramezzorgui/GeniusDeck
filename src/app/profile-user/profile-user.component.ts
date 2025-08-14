@@ -14,7 +14,7 @@ export class ProfileUserComponent implements OnInit {
   uploading = false;
   imageUrl: string | null = null;
 
-  private cloudinaryUrl = 'https://api.cloudinary.com/v1_1/debim1hdd/upload';
+  private cloudinaryUrl = 'https://api.cloudinary.com/v1_1/du3asbwfc/upload';
   private uploadPreset = 'Generator';
 
   constructor(

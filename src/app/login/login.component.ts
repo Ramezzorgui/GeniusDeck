@@ -35,23 +35,28 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  onSubmit(): void {
-    const { username, password } = this.form;
+onSubmit(): void {
+  const { username, password } = this.form;
 
-    this.authService.login(username, password).subscribe({
-      next: data => {
-        this.storageService.saveUser(data);
-        this.isLoginFailed = false;
-        this.isLoggedIn = true;
-        this.roles = this.storageService.getUser().roles || [];
-        this.redirectByRole();
-      },
-      error: err => {
-        this.errorMessage = err.error.message || 'Erreur lors de la connexion.';
-        this.isLoginFailed = true;
+  this.authService.login(username, password).subscribe({
+    next: data => {
+      this.storageService.saveUser(data);
+      this.isLoginFailed = false;
+      this.isLoggedIn = true;
+      this.roles = this.storageService.getUser().roles || [];
+      this.redirectByRole();
+    },
+    error: err => {
+      if (err.status === 403) {
+        // Compte bloqué
+        this.errorMessage = "Ce compte est bloqué. Veuillez contacter l'administrateur.";
+      } else {
+        this.errorMessage = err.error?.message || 'Erreur lors de la connexion.';
       }
-    });
-  }
+      this.isLoginFailed = true;
+    }
+  });
+}
 
   redirectByRole(): void {
     if (!this.roles || this.roles.length === 0) {

@@ -6,10 +6,10 @@
   <div class="navbar-right">
     <!-- Non connecté -->
     <div *ngIf="!isLoggedIn" class="auth-links">
-  <a routerLink="/login" [ngClass]="!isHomePage() ? 'dark-text' : ''">Sign In</a>
+  <a routerLink="/login" [ngClass]="!isHomePage() ? 'dark-text' : ''">Connexion</a>
   <a routerLink="/register"
      class="btn-primary"
-     [ngClass]="!isHomePage() ? 'dark-btn-text' : ''">Sign Up</a>
+     [ngClass]="!isHomePage() ? 'dark-btn-text' : ''">registre</a>
 </div>
 
     <!-- Connecté -->

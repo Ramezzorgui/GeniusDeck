@@ -60,11 +60,11 @@ updateImageUrl(userId: number, imageUrl: string) {
   return this.http.put(`http://localhost:8081/users/${userId}/image`, { imageUrl });
 }
 blockUser(id: number): Observable<any> {
-  return this.http.put(`http://localhost:8081/api/admin/users/${id}/block`, {});
+  return this.http.put(`http://localhost:8081/users/${id}/block`, {}, { responseType: 'text' });
 }
 
 unblockUser(id: number): Observable<any> {
-  return this.http.put(`http://localhost:8081/api/admin/users/${id}/unblock`, {});
+  return this.http.put(`http://localhost:8081/users/${id}/unblock`, {}, { responseType: 'text' });
 }
 
 

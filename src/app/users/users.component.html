@@ -42,6 +42,24 @@
               >
                 <i class="fas fa-edit"></i> Modifier
               </a>
+
+               <button
+    *ngIf="!user.blocked"
+    class="btn btn-sm ms-2 text-white"
+    style="background-color: #6b7280; border-color: #6b7280;"
+    (click)="blockUser(user.id)"
+  >
+    <i class="fas fa-ban"></i> Bloquer
+  </button>
+
+  <button
+    *ngIf="user.blocked"
+    class="btn btn-sm ms-2 text-white"
+    style="background-color: #6b7280; border-color: #6b7280;"
+    (click)="unblockUser(user.id)"
+  >
+    <i class="fas fa-unlock"></i> Débloquer
+  </button>
             </td>
           </tr>
         </tbody>
