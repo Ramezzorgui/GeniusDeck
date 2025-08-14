@@ -86,5 +86,17 @@ import java.util.*;
         }
     }
 
+    @PutMapping("/{id}/block")
+    public ResponseEntity<?> blockUser(@PathVariable Long id) {
+        userService.blockUser(id);
+        return ResponseEntity.ok().body("Utilisateur bloqué avec succès");
+    }
+
+    @PutMapping("/{id}/unblock")
+    public ResponseEntity<?> unblockUser(@PathVariable Long id) {
+        userService.unblockUser(id);
+        return ResponseEntity.ok().body("Utilisateur débloqué avec succès");
+    }
+
 
 }

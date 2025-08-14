@@ -86,4 +86,18 @@ public class UserService {
         return result;
     }
 
+    public void blockUser(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+        user.setBlocked(true);
+        userRepository.save(user);
+    }
+
+    public void unblockUser(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+        user.setBlocked(false);
+        userRepository.save(user);
+    }
+
 }

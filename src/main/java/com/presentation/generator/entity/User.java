@@ -40,6 +40,16 @@ public class User {
     private LocalDateTime lastLogin;
     private String imageUrl;
 
+    @Column(name = "blocked")
+    private boolean blocked = false;
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
+    }
+
     public String getImageUrl() {
         return imageUrl;
     }
